@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FindAJob } from "./FindAJob";
 import { Link } from "react-router-dom";
+import logo from '../assets/logo.png'
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,7 @@ export default function Navbar() {
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 {/* Logo */}
                 <a href="#" className="text-2xl ms-6 font-bold text-blue-600">
-                    CareConnect
+                    SevaMitra
                 </a>
 
                 <div>
