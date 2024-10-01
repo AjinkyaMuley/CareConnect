@@ -2,9 +2,13 @@ import { useState } from "react";
 import { FindAJob } from "./FindAJob";
 import { Link } from "react-router-dom";
 import logo from '../assets/logo.png'
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import LoginPage from "./CustomerLogin";
+import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoginOpen, setIsLoginOpen] = useState(false)
 
     return (
         <nav className="bg-gray-50 border-b border-gray-200 ">
@@ -44,12 +48,18 @@ export default function Navbar() {
                     >
                         Contact Us
                     </Link>
-                    <a
-                        href="#"
+                    <span
                         className="relative text-gray-600 hover:text-blue-600 transition duration-300 before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:w-full before:scale-x-0 before:bg-blue-600 before:transition-transform before:duration-300 before:origin-left hover:before:scale-x-100"
                     >
-                        <i class="fa-solid fa-right-to-bracket"></i> Login
-                    </a>
+                        <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
+                            <DialogTrigger asChild>
+                                <span><i class="fa-solid fa-right-to-bracket"></i> Login</span>
+                            </DialogTrigger>
+                            <DialogContent className='sm:max-w-[425px]'>
+                                <LoginPage />
+                            </DialogContent>
+                        </Dialog>
+                    </span>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -102,6 +112,12 @@ export default function Navbar() {
                         className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300"
                     >
                         Contact
+                    </a>
+                    <a
+                        href="#"
+                        className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300"
+                    >
+                        Login
                     </a>
                 </div>
             )}
