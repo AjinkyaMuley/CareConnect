@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Star } from 'lucide-react';
 import WhyChooseUs from './WhyChooseUs';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const services = [
   { name: 'Maid', rating: 4.3, image: '/api/placeholder/400/300' },
@@ -27,9 +29,11 @@ const ServiceCard = ({ name, rating, image }) => (
       </div>
     </div>
     <CardContent className="p-4">
-      <button className="w-full bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 transition duration-300">
-        Book Now
-      </button>
+      <Link to={'/service/maid'}>
+        <Button className="w-full bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 transition duration-300">
+          Book Now
+        </Button>
+      </Link>
     </CardContent>
   </Card>
 );

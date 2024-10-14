@@ -8,6 +8,7 @@ import Home from './pageComponents/Home'
 import LoginPage from './pageComponents/CustomerLogin'
 import AllServices from './pageComponents/AllServices'
 import WorkersList from './pageComponents/WorkersList'
+import ServicePage from './pageComponents/ServicePage'
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/login' element={<LoginPage />}/>
         <Route path='/services' element={<AllServices />}/>
         <Route path='/workersList' element={<WorkersList />}/>
+        <Route path='/service/maid' element={<ServicePage />}/>
       </Routes>
       <Footer />
     </div>
