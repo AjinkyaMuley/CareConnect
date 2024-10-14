@@ -30,18 +30,18 @@ export default function Navbar() {
                     >
                         Home
                     </Link>
-                    <a
-                        href="#"
+                    <Link
+                        to={'/services'}
                         className="relative text-gray-600 hover:text-blue-600 transition duration-300 before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:w-full before:scale-x-0 before:bg-blue-600 before:transition-transform before:duration-300 before:origin-left hover:before:scale-x-100"
                     >
                         Services
-                    </a>
-                    <a
-                        href="#"
+                    </Link>
+                    <Link
+                        to={'/workersList'}
                         className="relative text-gray-600 hover:text-blue-600 transition duration-300 before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:w-full before:scale-x-0 before:bg-blue-600 before:transition-transform before:duration-300 before:origin-left hover:before:scale-x-100"
                     >
-                        About Us
-                    </a>
+                        Mitras
+                    </Link>
                     <Link
                         to={'/contact'}
                         className="relative text-gray-600 hover:text-blue-600 transition duration-300 before:content-[''] before:absolute before:left-0 before:bottom-0 before:h-[2px] before:w-full before:scale-x-0 before:bg-blue-600 before:transition-transform before:duration-300 before:origin-left hover:before:scale-x-100"

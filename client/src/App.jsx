@@ -6,6 +6,8 @@ import Contact from './pageComponents/Contact'
 import Footer from './pageComponents/Footer'
 import Home from './pageComponents/Home'
 import LoginPage from './pageComponents/CustomerLogin'
+import AllServices from './pageComponents/AllServices'
+import WorkersList from './pageComponents/WorkersList'
 
 const App = () => {
   return (
@@ -15,6 +17,8 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/contact' element={<Contact />}/>
         <Route path='/login' element={<LoginPage />}/>
+        <Route path='/services' element={<AllServices />}/>
+        <Route path='/workersList' element={<WorkersList />}/>
       </Routes>
       <Footer />
     </div>

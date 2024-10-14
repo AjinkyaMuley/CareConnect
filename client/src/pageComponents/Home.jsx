@@ -3,6 +3,7 @@ import SevaMitraBanner from './Banner'
 import ServiceCard from './ServiceCard'
 import WorkersTestimonialSection from './WorkerTestimonials'
 import WhyChooseUs from './WhyChooseUs'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
@@ -25,10 +26,10 @@ const Home = () => {
                 <ServiceCard />
                 <ServiceCard />
                 <div className='flex flex-col justify-center ms-6'>
-                    <div className='flex items-center justify-center bg-gray-200 rounded-full p-3'>
+                    <Link to={'/services'} className='flex items-center justify-center bg-gray-200 rounded-full p-3'>
                         <i className="fa-solid fa-ellipsis text-2xl me-2"></i>
                         <p className="text-lg font-medium leading-none">more</p>
-                    </div>
+                    </Link>
                 </div>
             </div>
 
