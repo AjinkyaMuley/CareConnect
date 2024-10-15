@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Star, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const workers = [
   { id: 1, name: "John Doe", category: "Maid", rating: 4.5, image: "/api/placeholder/150/150", details: "5 years experience, available on weekends" },
@@ -25,33 +26,37 @@ const WorkersList = () => {
       <h1 className="text-3xl font-bold ms-5 mb-6">Available Mitras</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-8">
         {workers.map((worker) => (
-          <Card key={worker.id} className="flex flex-col">
-            <CardContent className="pt-6">
-              <div className="flex items-center space-x-4 mb-4">
-                <Avatar className="w-16 h-16">
-                  <AvatarImage src={worker.image} alt={worker.name} />
-                  <AvatarFallback>{worker.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <h2 className="text-xl font-semibold">{worker.name}</h2>
-                  <Badge variant="secondary" className="mt-1">{worker.category}</Badge>
+          <Link to={'/worker/2'}>
+            <Card key={worker.id} className="flex flex-col">
+              <CardContent className="pt-6">
+                <div className="flex items-center space-x-4 mb-4">
+                  <Avatar className="w-16 h-16">
+                    <AvatarImage src={worker.image} alt={worker.name} />
+                    <AvatarFallback>{worker.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h2 className="text-xl font-semibold">{worker.name}</h2>
+                    <Badge variant="secondary" className="mt-1">{worker.category}</Badge>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center mb-2">
-                <Star className="w-5 h-5 text-yellow-400 mr-1" />
-                <span>{worker.rating.toFixed(1)}</span>
-              </div>
-              <p className="text-sm text-gray-600">{worker.details}</p>
-            </CardContent>
-            <CardFooter className="mt-auto">
-              <Button 
-                className="w-full" 
-                onClick={() => handleChatClick(worker.id)}
-              >
-                <MessageCircle className="w-4 h-4 mr-2" /> Chat with {worker.name}
-              </Button>
-            </CardFooter>
-          </Card>
+                <div className="flex items-center mb-2">
+                  <Star className="w-5 h-5 text-yellow-400 mr-1" />
+                  <span>{worker.rating.toFixed(1)}</span>
+                </div>
+                <p className="text-sm text-gray-600">{worker.details}</p>
+              </CardContent>
+              <CardFooter className="mt-auto">
+                <Link to={'/chat'}>
+                  <Button
+                    className="w-full"
+                    onClick={() => handleChatClick(worker.id)}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" /> Chat with {worker.name}
+                  </Button>
+                </Link>
+              </CardFooter>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>

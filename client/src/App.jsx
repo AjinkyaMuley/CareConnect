@@ -9,6 +9,7 @@ import LoginPage from './pageComponents/CustomerLogin'
 import AllServices from './pageComponents/AllServices'
 import WorkersList from './pageComponents/WorkersList'
 import ServicePage from './pageComponents/ServicePage'
+import WorkerDetail from './pageComponents/WorkerDetail'
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path='/services' element={<AllServices />}/>
         <Route path='/workersList' element={<WorkersList />}/>
         <Route path='/service/maid' element={<ServicePage />}/>
+        <Route path='/worker/:id' element={<WorkerDetail />}/>
       </Routes>
       <Footer />
     </div>
