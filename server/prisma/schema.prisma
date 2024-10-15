@@ -19,3 +19,45 @@ model User {
   email String?
   phone_number Int
 }
+
+model Worker {
+  id               Int      @id @default(autoincrement())
+  name             String
+  profession       String
+  avatarUrl        String?
+  rating           Float
+  location         String
+  experience       String
+  familyBackground String?
+  phone            String
+  email            String   @unique
+  availability     String
+  description      String
+  skills           String[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt @default(now())
+
+  pastWork PastWork[]
+  reviews  Review[]
+}
+
+model PastWork {
+  id        Int      @id @default(autoincrement())
+  company   String
+  duration  String
+  workerId  Int
+  worker    Worker   @relation(fields: [workerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  author    String
+  content   String
+  rating    Float
+  workerId  Int
+  worker    Worker   @relation(fields: [workerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+}

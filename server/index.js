@@ -1,21 +1,39 @@
-const {PrismaClient} = require('@prisma/client')
-const prisma = new PrismaClient();
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import workerRoutes from './routes/workersRoutes.js'
 
-async function main(){
-    const newUser = await prisma.user.create({
-        data: {
-            email : "abc@gmail.com",
-            phone_number : 123456789
-        }
-    })
+dotenv.config()
+const app = express()
 
-    console.log("New User created: ",newUser)
-}
+app.use(cors())
+app.use(express.json())
 
-main()
-.catch(e => {
-    throw e;
+// ROUTES
+app.use('/api/workers/',workerRoutes)
+
+app.listen(process.env.PORT,() => {
+    console.log(`Server is running on port ${process.env.PORT}`)
 })
-.finally(async () => {
-    await prisma.$disconnect()
-})
+
+// const {PrismaClient} = require('@prisma/client')
+// const prisma = new PrismaClient();
+
+// async function main(){
+//     const newUser = await prisma.user.create({
+//         data: {
+//             email : "abc@gmail.com",
+//             phone_number : 123456789
+//         }
+//     })
+
+//     console.log("New User created: ",newUser)
+// }
+
+// main()
+// .catch(e => {
+//     throw e;
+// })
+// .finally(async () => {
+//     await prisma.$disconnect()
+// })
