@@ -17,7 +17,7 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   email String?
-  phone_number Int
+  phone_number Int    @unique
 }
 
 model Worker {
@@ -29,7 +29,7 @@ model Worker {
   location         String
   experience       String
   familyBackground String?
-  phone            String
+  phone            String   @unique 
   email            String   @unique
   availability     String
   description      String
