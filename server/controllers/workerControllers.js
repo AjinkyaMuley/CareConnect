@@ -8,7 +8,11 @@ export const workerDetail = async (req, res) => {
         const { id } = req.params;
 
         const workers = await prisma.worker.findMany({
-            where: { id: parseInt(id) }
+            where: { id: parseInt(id) },
+            include: {
+                pastWork: true,
+                reviews: true
+            }
         })
 
         res.send(workers);
@@ -32,7 +36,7 @@ export const allWorkers = async (req, res) => {
             },
         });
 
-        res.send(workers);
+        res.status(200).json(workers);
     } catch (error) {
         console.error('Error retrieve worker:', error);
         res.status(400).json({ error: 'Failed to retrieve worker' });
