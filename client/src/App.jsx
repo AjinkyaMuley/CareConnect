@@ -10,10 +10,11 @@ import AllServices from './pageComponents/AllServices'
 import WorkersList from './pageComponents/WorkersList'
 import ServicePage from './pageComponents/ServicePage'
 import WorkerDetail from './pageComponents/WorkerDetail'
+import { AuthProvider } from './contexts/AuthContext'
 
 const App = () => {
   return (
-    <div>
+    <AuthProvider>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -25,7 +26,7 @@ const App = () => {
         <Route path='/worker/:id' element={<WorkerDetail />}/>
       </Routes>
       <Footer />
-    </div>
+    </AuthProvider>
   )
 }
 

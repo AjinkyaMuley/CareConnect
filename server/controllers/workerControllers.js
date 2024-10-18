@@ -33,6 +33,7 @@ export const allWorkers = async (req, res) => {
                 rating: true,
                 avatarUrl: true,
                 availability: true,
+                location : true
             },
         });
 

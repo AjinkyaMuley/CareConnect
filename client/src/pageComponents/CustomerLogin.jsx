@@ -5,12 +5,16 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import CustomerSignUp from './CustomerSignUp';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 const CustomerLogin = () => {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
+  const {login} = useAuth();
 
   const handleSendOTP = () => {
     // Implement OTP sending logic here
@@ -18,13 +22,26 @@ const CustomerLogin = () => {
     setOtpSent(true);
   };
 
-  const handleLogin = () => {
-    // Implement login logic here
-    console.log('Logging in with OTP:', otp);
+  const handleLogin = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/login/user', {
+        params: {
+          phone_number: phoneNumber
+        }
+      });
+
+      if (response.status === 200) {
+        login(response.data.email);
+        toast.success('Login successful!');
+      }
+    } catch (error) {
+      toast.error('Login failed. Please try again.');
+    }
   };
 
   return (
     <div className="flex items-center justify-center">
+      <Toaster position="top-center" reverseOrder={false} />
       <Card className="w-96">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">Sevamitra</CardTitle>

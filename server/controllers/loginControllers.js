@@ -2,19 +2,30 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient;
 
-export const userLogin = async (req,res) => {
+export const userLogin = async (req, res) => {
     try {
-        const {phone_number} = req.body;
+        const { phone_number } = req.query;
+
+        // Ensure phone_number is not undefined
+        if (!phone_number) {
+            return res.status(400).json({ error: "Phone number is required" });
+        }
 
         const result = await prisma.user.findUnique({
-            where: {phone_number : phone_number}
-        })
+            where: {
+                phone_number: parseInt(phone_number)
+            }
+        });
 
-        res.status(200).json(result)
+        if (!result) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json(result);
     
     } catch (error) {
-        console.log('error logging in ',error)
-        res.status(404).json(error)
+        console.error('Error logging in:', error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 
