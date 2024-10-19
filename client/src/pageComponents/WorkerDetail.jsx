@@ -6,11 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import toast from 'react-hot-toast';
 
 const WorkerDetail = () => {
   const [workerDetailData, setWorkerDetailData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [reviewForm, setReviewForm] = useState({ author: '', content: '', rating: 0 });
   const { id } = useParams();
 
   useEffect(() => {
@@ -28,7 +33,30 @@ const WorkerDetail = () => {
     };
 
     fetchWorkerDetail();
+
+    setIsLoggedIn(localStorage.getItem('user_login') === 'true');
   }, [id]);
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://localhost:8000/api/reviews/add-review`, {review : reviewForm,workerId : id});
+
+      setWorkerDetailData({
+        ...workerDetailData,
+        reviews: [...workerDetailData.reviews, response.data]
+      });
+      setReviewForm({ author: '', content: '', rating: 0 });
+      toast.success('Review added Successfully');
+    } catch (err) {
+      console.error('Failed to submit review', err);
+    }
+  };
+
+  const handleReviewChange = (e) => {
+    setReviewForm({ ...reviewForm, [e.target.name]: e.target.value });
+  };
+
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -87,7 +115,7 @@ const WorkerDetail = () => {
             <div className="md:col-span-2">
               <h3 className="text-xl font-semibold mb-4 text-blue-600">About Me</h3>
               <p className="text-gray-700 leading-relaxed">{workerDetailData.description}</p>
-              
+
               <div className="mt-6">
                 <h3 className="text-xl font-semibold mb-4 text-blue-600">Skills</h3>
                 <div className="flex flex-wrap gap-2">
@@ -98,7 +126,7 @@ const WorkerDetail = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="mt-10">
             <h3 className="text-xl font-semibold mb-4 text-blue-600">Work Experience</h3>
             <div className="bg-white rounded-lg shadow p-4">
@@ -110,7 +138,7 @@ const WorkerDetail = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="mt-10">
             <h3 className="text-xl font-semibold mb-4 text-blue-600">Reviews</h3>
             <div className="space-y-4">
@@ -132,6 +160,47 @@ const WorkerDetail = () => {
               ))}
             </div>
           </div>
+
+          {isLoggedIn && (
+            <div className="mt-10">
+              <h3 className="text-xl font-semibold mb-4 text-blue-600">Add a Review</h3>
+              <form onSubmit={handleReviewSubmit} className="space-y-4">
+                <Input
+                  name="author"
+                  placeholder="Your Name"
+                  value={reviewForm.author}
+                  onChange={handleReviewChange}
+                  required
+                />
+                <Textarea
+                  name="content"
+                  placeholder="Write your review here..."
+                  value={reviewForm.content}
+                  onChange={handleReviewChange}
+                  required
+                />
+                <div className="flex items-center space-x-2">
+                  <label htmlFor="rating" className="font-medium">Rating:</label>
+                  <Input
+                    id="rating"
+                    name="rating"
+                    type="number"
+                    min="1"
+                    max="5"
+                    step="0.1"
+                    value={reviewForm.rating}
+                    onChange={handleReviewChange}
+                    required
+                    className="w-20"
+                  />
+                  <span className="text-gray-500">(1-5)</span>
+                </div>
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  Submit Review
+                </Button>
+              </form>
+            </div>
+          )}
         </CardContent>
         <CardFooter className="bg-gray-100 rounded-b-lg flex justify-center">
           <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-300">Contact {workerDetailData.name}</Button>
