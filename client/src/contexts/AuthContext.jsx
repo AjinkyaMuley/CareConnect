@@ -15,9 +15,11 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = (email) => {
+  const login = (email,isWorker,id) => {
     localStorage.setItem('user_login', 'true');
     localStorage.setItem('user', email);
+    localStorage.setItem('isWorker',isWorker);
+    localStorage.setItem('user_id',id)
     setIsLoggedIn(true);
     setUserEmail(email);
   };
@@ -25,6 +27,8 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('user_login');
     localStorage.removeItem('user');
+    localStorage.removeItem('isWorker');
+    localStorage.removeItem('user_id')
     setIsLoggedIn(false);
     setUserEmail('');
   };

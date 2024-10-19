@@ -11,6 +11,9 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { useAuth } from '@/contexts/AuthContext';
 
 export function FindAJob() {
     const [name, setName] = useState('');
@@ -18,6 +21,7 @@ export function FindAJob() {
     const [email, setEmail] = useState('');
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState('');
+    const {login} = useAuth();
 
     const handleSendOTP = () => {
         // Implement OTP sending logic here
@@ -25,13 +29,31 @@ export function FindAJob() {
         setOtpSent(true);
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // Implement submit logic here
         console.log('Submitting with OTP:', otp);
+
+        try {
+            const response = await axios.get('http://localhost:8000/api/login/worker/',{
+                params : {
+                    phone : phoneNumber
+                }
+            });
+            
+            if(response.status === 200)
+            {
+                login(response.data.email,true,response.data.id);
+                toast.success('Login Successfull');
+            }
+
+        } catch (error) {
+            toast.error('Login failed. Please try again.')
+        }
     };
 
     return (
         <Sheet>
+            <Toaster position="top-center" reverseOrder={false} />
             <SheetTrigger asChild>
                 <Button
                     variant=""

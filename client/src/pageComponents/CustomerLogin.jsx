@@ -31,7 +31,7 @@ const CustomerLogin = () => {
       });
 
       if (response.status === 200) {
-        login(response.data.email);
+        login(response.data.email,false,response.data.id);
         toast.success('Login successful!');
       }
     } catch (error) {

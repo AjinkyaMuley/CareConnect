@@ -31,7 +31,7 @@ export const userLogin = async (req, res) => {
 
 export const workerLogin = async (req, res) => {
     try {
-        const { phone } = req.body;
+        const { phone } = req.query;
 
         if (!phone) {
             return res.status(400).json({ error: "Phone number is required" });

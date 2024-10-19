@@ -13,15 +13,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id Int @id @default(autoincrement())
-  email String?
-  phone_number Int    @unique
+  id           Int       @id @default(autoincrement())
+  email        String?
+  phone_number Int       @unique
+  jobPosts     JobPost[]
 }
 
 model Worker {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   name             String
   profession       String
   avatarUrl        String?
@@ -29,13 +29,13 @@ model Worker {
   location         String
   experience       String
   familyBackground String?
-  phone            String   @unique 
-  email            String   @unique
+  phone            String    @unique 
+  email            String    @unique
   availability     String
   description      String
   skills           String[]
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt @default(now())
 
   pastWork PastWork[]
   reviews  Review[]
@@ -60,4 +60,26 @@ model Review {
   worker    Worker   @relation(fields: [workerId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
+}
+
+model JobPost {
+  id           Int      @id @default(autoincrement())
+  title        String
+  category     String
+  description  String
+  salary       Float
+  timing       String
+  location     String
+  experience   String
+  preferences  String?
+  availability String[]
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt  @default(now())
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String @unique
 }

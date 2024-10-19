@@ -4,27 +4,31 @@ import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import LoginPage from "./CustomerLogin";
 import { Button } from "@/components/ui/button";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
-    const {isLoggedIn,userEmail,logout} = useAuth();
-
+    const { isLoggedIn, userEmail, logout } = useAuth();
 
     const handleLogout = () => {
-        logout()
+        logout();
+        localStorage.removeItem('isWorker');
+        localStorage.removeItem('user_login');
     };
 
     const getInitial = (email) => {
-        return localStorage.getItem('user').charAt(0).toUpperCase();
+        return email.charAt(0).toUpperCase();
     };
+
+    const isWorker = localStorage.getItem('isWorker') === 'true';
+    const isUserLoggedIn = localStorage.getItem('user_login') === 'true';
 
     return (
         <nav className="bg-gray-50 border-b border-gray-200">
@@ -58,12 +62,29 @@ export default function Navbar() {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
-                                <DropdownMenuItem onSelect={() => {/* Handle add review */}}>
-                                    Post A Job
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onSelect={() => {/* Handle contact/messages */}}>
-                                    Contact/Messages
-                                </DropdownMenuItem>
+                                {isWorker && isUserLoggedIn ? (
+                                    <>
+                                        <Link to={'/all-jobs'}>
+                                            <DropdownMenuItem onSelect={() => {/* Handle find job */ }}>
+                                                Find Job
+                                            </DropdownMenuItem>
+                                        </Link>
+                                        <DropdownMenuItem onSelect={() => {/* Handle chats */ }}>
+                                            Chats
+                                        </DropdownMenuItem>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to={'/post-a-job'}>
+                                            <DropdownMenuItem onSelect={() => {/* Handle post a job */ }}>
+                                                Post A Job
+                                            </DropdownMenuItem>
+                                        </Link>
+                                        <DropdownMenuItem onSelect={() => {/* Handle contact/messages */ }}>
+                                            Contact/Messages
+                                        </DropdownMenuItem>
+                                    </>
+                                )}
                                 <DropdownMenuItem onSelect={handleLogout}>
                                     Logout
                                 </DropdownMenuItem>
@@ -100,8 +121,18 @@ export default function Navbar() {
                     <Link to="/contact" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300">Contact Us</Link>
                     {isLoggedIn ? (
                         <>
-                            <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle add review */}}>Add Review</a>
-                            <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle contact/messages */}}>Contact/Messages</a>
+                            {isWorker && isUserLoggedIn ? (
+                                <>
+                                    <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle find job */ }}>Find Job</a>
+                                    <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle chats */ }}>Chats</a>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to={'/post-a-job'} className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle post a job */ }}>Post A Job</Link>
+
+                                    <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={() => {/* Handle contact/messages */ }}>Contact/Messages</a>
+                                </>
+                            )}
                             <a href="#" className="block px-4 py-2 text-gray-600 hover:text-blue-600 transition duration-300" onClick={handleLogout}>Logout</a>
                         </>
                     ) : (
