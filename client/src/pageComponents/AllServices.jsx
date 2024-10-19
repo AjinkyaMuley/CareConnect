@@ -29,7 +29,7 @@ const ServiceCard = ({ name, rating, image }) => (
       </div>
     </div>
     <CardContent className="p-4">
-      <Link to={'/service/maid'}>
+      <Link to={`/service/${name}`}>
         <Button className="w-full bg-yellow-400 text-black font-bold py-2 px-4 rounded hover:bg-yellow-500 transition duration-300">
           Book Now
         </Button>

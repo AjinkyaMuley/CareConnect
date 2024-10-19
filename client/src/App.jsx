@@ -15,6 +15,7 @@ import PostAJob from './pageComponents/PostAJob'
 import AllJobs from './pageComponents/AllJobs'
 import JobDetailsPage from './pageComponents/jobDetails'
 import WorkerRegister from './pageComponents/WorkerRegister'
+import ServiceRelatedWorkers from './pageComponents/ServiceRelatatedWorkers'
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
         <Route path='/login' element={<LoginPage />}/>
         <Route path='/services' element={<AllServices />}/>
         <Route path='/workersList' element={<WorkersList />}/>
-        <Route path='/service/maid' element={<ServicePage />}/>
+        <Route path='/service/:profession' element={<ServiceRelatedWorkers />}/>
         <Route path='/worker/:id' element={<WorkerDetail />}/>
         <Route path='/post-a-job' element={<PostAJob />}/>
         <Route path='/all-jobs' element={<AllJobs />}/>
