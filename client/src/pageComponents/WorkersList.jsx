@@ -3,12 +3,13 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Star, MessageCircle, MapPin } from 'lucide-react';
+import { Star, MessageCircle, MapPin, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const WorkersList = () => {
   const [workersData, setWorkersData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleChatClick = (workerId) => {
     console.log(`Open chat with worker ${workerId}`);
@@ -19,20 +20,27 @@ const WorkersList = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/workers/get-all-workers');
       setWorkersData(response.data);
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching workers:', error);
+      setIsLoading(false);
     }
   };
   
   useEffect(() => {
-    const fetchWorkers = async () => {
-      await getAllWorkers();
-    };
-  
-    fetchWorkers();
+    getAllWorkers();
   }, []);
   
   console.log(workersData);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="w-12 h-12 animate-spin text-primary" />
+        <span className="ml-2 text-xl font-semibold">Loading Mitras...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto p-4">

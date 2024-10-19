@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Star, MapPin, Briefcase, Users, Phone, Mail, Calendar } from 'lucide-react';
+import { Star, MapPin, Briefcase, Users, Phone, Mail, Calendar, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,6 +17,7 @@ const WorkerDetail = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [reviewForm, setReviewForm] = useState({ author: '', content: '', rating: 0 });
   const { id } = useParams();
+
 
   useEffect(() => {
     const fetchWorkerDetail = async () => {
@@ -58,7 +59,15 @@ const WorkerDetail = () => {
   };
 
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+        <Loader2 className="h-16 w-16 text-blue-600 animate-spin" />
+        <p className="mt-4 text-xl font-semibold text-gray-700">Loading worker details...</p>
+      </div>
+    );
+  }
+
   if (error) return <div>Error: {error}</div>;
   if (!workerDetailData) return <div>No worker data found</div>;
 

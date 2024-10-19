@@ -4,16 +4,16 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Briefcase, MapPin, Clock, IndianRupee } from 'lucide-react';
+import { Briefcase, MapPin, Clock, IndianRupee, Loader } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-
 const AllJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [jobsData, setJobsData] = useState([])
+  const [jobsData, setJobsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filteredJobs = jobsData.filter(job =>
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -21,22 +21,37 @@ const AllJobs = () => {
   );
 
   useEffect(() => {
-    getAllJobs()
-  }, [])
+    getAllJobs();
+  }, []);
 
   const getAllJobs = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/jobs/get-all-jobs/')
-      setJobsData(response.data)
+      setIsLoading(true);
+      const response = await axios.get('http://localhost:8000/api/jobs/get-all-jobs/');
+      setJobsData(response.data);
     } catch (error) {
-      console.log(error)
-      toast.error('Failed to Fetch data')
+      console.log(error);
+      toast.error('Failed to Fetch data');
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader className="h-12 w-12 animate-spin text-primary" />
+        <span className="ml-2 text-xl font-semibold">Loading jobs...</span>
+      </div>
+    );
   }
 
   return (
     <div className="container mx-auto p-4">
       <Toaster position="top-center" reverseOrder={false} />
+      {jobsData.length === 0 && (
+        <div className="text-center text-2xl mt-10">No Jobs Found</div>
+      )}
       <h1 className="text-3xl font-bold text-center mb-8">Job Listings on Sevamitra</h1>
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <Input
@@ -56,15 +71,14 @@ const AllJobs = () => {
             <SelectItem value="Driver">Driver</SelectItem>
             <SelectItem value="Electrician">Electrician</SelectItem>
             <SelectItem value="Gardener">Gardener</SelectItem>
-            {/* Add more categories as needed */}
           </SelectContent>
         </Select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredJobs.map(job => (
-          <Link to={`/jobDetail/${job.id}`}>
-            <Card key={job.id}>
+          <Link to={`/jobDetail/${job.id}`} key={job.id}>
+            <Card>
               <CardHeader>
                 <CardTitle className="text-xl font-semibold">{job.title}</CardTitle>
                 <Badge variant="secondary" className="mt-2">{job.category}</Badge>
