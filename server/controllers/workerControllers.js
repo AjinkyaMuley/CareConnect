@@ -68,7 +68,7 @@ export const getAllWorkersByProfession = async (req, res) => {
 }
 
 export const addWorker = async (req, res) => {
-    const { worker, pastWork, reviews } = req.body;
+    const { worker, pastWork } = req.body;
 
     try {
         const result = await prisma.worker.create({
@@ -81,17 +81,9 @@ export const addWorker = async (req, res) => {
                         duration: work.duration
                     }))
                 },
-                reviews: {
-                    create: reviews.map(review => ({
-                        author: review.author,
-                        content: review.content,
-                        rating: review.rating
-                    }))
-                }
             },
             include: {
                 pastWork: true,
-                reviews: true
             }
         })
 

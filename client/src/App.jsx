@@ -14,6 +14,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import PostAJob from './pageComponents/PostAJob'
 import AllJobs from './pageComponents/AllJobs'
 import JobDetailsPage from './pageComponents/jobDetails'
+import WorkerRegister from './pageComponents/WorkerRegister'
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/post-a-job' element={<PostAJob />}/>
         <Route path='/all-jobs' element={<AllJobs />}/>
         <Route path='/jobDetail/:id' element={<JobDetailsPage />}/>
+        <Route path='/register' element={<WorkerRegister />}/>
       </Routes>
       <Footer />
     </AuthProvider>

@@ -18,7 +18,6 @@ import { useAuth } from '@/contexts/AuthContext';
 export function FindAJob() {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
     const [otpSent, setOtpSent] = useState(false);
     const [otp, setOtp] = useState('');
     const {login} = useAuth();
@@ -43,7 +42,7 @@ export function FindAJob() {
             if(response.status === 200)
             {
                 login(response.data.email,true,response.data.id);
-                toast.success('Login Successfull');
+                toast.success('Login Successful');
             }
 
         } catch (error) {
@@ -93,17 +92,6 @@ export function FindAJob() {
                             </Button>
                         </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="email" className="text-right">
-                            Email
-                        </Label>
-                        <Input 
-                            id="email" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
-                            className="col-span-3" 
-                        />
-                    </div>
                     {otpSent && (
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="otp" className="text-right">
@@ -127,6 +115,10 @@ export function FindAJob() {
                         </Button>
                     </SheetClose>
                 </SheetFooter>
+                <div className="mt-4 text-center">
+                    <p>Not registered yet?</p>
+                    <a href="/register" className="text-blue-600 hover:underline">Register as a SevaMitra</a>
+                </div>
             </SheetContent>
         </Sheet>
     )

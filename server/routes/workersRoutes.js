@@ -6,7 +6,7 @@ const workerRoutes = Router();
 workerRoutes.get('/worker/:id',workerDetail)
 workerRoutes.get('/get-all-workers',allWorkers)
 workerRoutes.get('/get-all-workers-by-profession/:profession',getAllWorkersByProfession)
-workerRoutes.get('/add-worker',addWorker)
+workerRoutes.post('/add-worker',addWorker)
 workerRoutes.get('/update-worker/:id',updateWorker)
 workerRoutes.get('/delete-worker/:id',deleteWorker)
 

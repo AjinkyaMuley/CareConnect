@@ -85,7 +85,7 @@ const AllJobs = () => {
                   </div>
                   <div className="flex items-center">
                     <Briefcase className="h-4 w-4 mr-2" />
-                    <span>Posted on {new Date(job.postedDate).toLocaleDateString()}</span>
+                    <span>Posted on {new Date(job.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
                 <Button className="w-full mt-4">Apply Now</Button>
