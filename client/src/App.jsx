@@ -16,6 +16,7 @@ import AllJobs from './pageComponents/AllJobs'
 import JobDetailsPage from './pageComponents/jobDetails'
 import WorkerRegister from './pageComponents/WorkerRegister'
 import ServiceRelatedWorkers from './pageComponents/ServiceRelatatedWorkers'
+// import Chat from './chat'
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/all-jobs' element={<AllJobs />}/>
         <Route path='/jobDetail/:id' element={<JobDetailsPage />}/>
         <Route path='/register' element={<WorkerRegister />}/>
+        {/* <Route path='/chat' element={<Chat/>} /> */}
       </Routes>
       <Footer />
     </AuthProvider>

@@ -14,10 +14,12 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String?
-  phone_number Int       @unique
-  jobPosts     JobPost[]
+  id                Int           @id @default(autoincrement())
+  email             String?
+  phone_number      Int           @unique
+  jobPosts          JobPost[]
+  sentMessages      Message[]     @relation("SentMessages")
+  receivedMessages Message[]      @relation("ReceivedMessages")
 }
 
 model Worker {
@@ -82,4 +84,21 @@ model JobPost {
 model Category {
   id   Int    @id @default(autoincrement())
   name String @unique
+}
+
+model Message {
+    id           Int      @id @default(autoincrement())
+    sender       User     @relation("SentMessages",fields : [senderId], references : [id])
+    senderId     Int
+    recipient    User?    @relation("ReceivedMessages", fields : [recipientId], references : [id])
+    recipientId  Int
+    messageType  MessageType
+    content      String?
+    fileUrl      String?
+    timestamp    DateTime   @default(now())
+}
+
+enum MessageType{
+  text
+  file
 }
