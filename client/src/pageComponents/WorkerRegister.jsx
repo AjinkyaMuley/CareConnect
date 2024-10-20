@@ -188,20 +188,20 @@ export default function WorkerRegister() {
                                 <SelectValue placeholder="Select your profession" />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="maid">Maid</SelectItem>
-                                <SelectItem value="cook">Cook</SelectItem>
-                                <SelectItem value="chauffeur">Chauffeur</SelectItem>
-                                <SelectItem value="waiter">Waiter</SelectItem>
-                                <SelectItem value="electrician">Electrician</SelectItem>
-                                <SelectItem value="gardener">Gardener</SelectItem>
-                                <SelectItem value="carwasher">Car Washer</SelectItem>
-                                <SelectItem value="driver">Driver</SelectItem>
-                                <SelectItem value="transporter">Transporter</SelectItem>
-                                <SelectItem value="mason">Mason</SelectItem>
-                                <SelectItem value="babysitter">Babysitter</SelectItem>
-                                <SelectItem value="cleaner">Cleaner</SelectItem>
-                                <SelectItem value="utensilwasher">Utensil Washer</SelectItem>
-                                <SelectItem value="clotheswasher">Clothes Washer</SelectItem>
+                                <SelectItem value="Maid">Maid</SelectItem>
+                                <SelectItem value="Cook">Cook</SelectItem>
+                                <SelectItem value="Chauffeur">Chauffeur</SelectItem>
+                                <SelectItem value="Waiter">Waiter</SelectItem>
+                                <SelectItem value="Electrician">Electrician</SelectItem>
+                                <SelectItem value="Gardener">Gardener</SelectItem>
+                                <SelectItem value="Carwasher">Car Washer</SelectItem>
+                                <SelectItem value="Driver">Driver</SelectItem>
+                                <SelectItem value="Transporter">Transporter</SelectItem>
+                                <SelectItem value="Mason">Mason</SelectItem>
+                                <SelectItem value="Babysitter">Babysitter</SelectItem>
+                                <SelectItem value="Cleaner">Cleaner</SelectItem>
+                                <SelectItem value="Utensilwasher">Utensil Washer</SelectItem>
+                                <SelectItem value="Clotheswasher">Clothes Washer</SelectItem>
                             </SelectContent>
                         </Select>
                         {errors.profession && <p className="text-red-500 text-xs mt-1">{errors.profession}</p>}

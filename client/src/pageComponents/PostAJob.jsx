@@ -25,9 +25,18 @@ const PostAJob = () => {
     setIsWorker(workerStatus);
 
     if (!userLogin || workerStatus) {
+
+        toast.custom(
+          <div className="flex items-center p-4 bg-yellow-400 text-black rounded-lg shadow-lg">
+            <svg className="w-6 h-6 mr-2 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M12 18h0m-9 0a9 9 0 1118 0 9 9 0 01-18 0z"></path>
+            </svg>
+            <span className="font-medium">Please log in first!</span>
+          </div>
+        )        
       navigate('/')
     }
-  }, [navigate]);
+  }, [navigate,localStorage]);
 
   const [jobDetails, setJobDetails] = useState({
     title: '',
@@ -61,13 +70,13 @@ const PostAJob = () => {
 
     try {
       const response = await axios.post('http://localhost:8000/api/jobs/post-job',
-        {jobDetails, userId: localStorage.getItem('user_id')},
+        { jobDetails, userId: localStorage.getItem('user_id') },
         {
           headers: {
             'Content-Type': 'application/json'
           }
         },
-        {withCredentials: true}
+        { withCredentials: true }
       );
       toast.success('Data Saved Successfully');
       setJobDetails({
@@ -128,11 +137,18 @@ const PostAJob = () => {
                   <SelectContent>
                     <SelectItem value="Maid">Maid</SelectItem>
                     <SelectItem value="Cook">Cook</SelectItem>
-                    <SelectItem value="Driver">Driver</SelectItem>
-                    <SelectItem value="Gardener">Gardener</SelectItem>
+                    <SelectItem value="Chauffeur">Chauffeur</SelectItem>
+                    <SelectItem value="Waiter">Waiter</SelectItem>
                     <SelectItem value="Electrician">Electrician</SelectItem>
+                    <SelectItem value="Gardener">Gardener</SelectItem>
+                    <SelectItem value="Carwasher">Car Washer</SelectItem>
+                    <SelectItem value="Driver">Driver</SelectItem>
+                    <SelectItem value="Transporter">Transporter</SelectItem>
+                    <SelectItem value="Mason">Mason</SelectItem>
                     <SelectItem value="Babysitter">Babysitter</SelectItem>
-                    {/* Add more categories as needed */}
+                    <SelectItem value="Cleaner">Cleaner</SelectItem>
+                    <SelectItem value="Utensilwasher">Utensil Washer</SelectItem>
+                    <SelectItem value="Clotheswasher">Clothes Washer</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

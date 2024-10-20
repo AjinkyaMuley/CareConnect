@@ -7,18 +7,47 @@ import { Badge } from '@/components/ui/badge';
 import { Briefcase, MapPin, Clock, IndianRupee, Loader } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AllJobs = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [jobsData, setJobsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    if (localStorage.getItem('user_login') !== 'true' || localStorage.getItem('isWorker') !== 'true') {
+      toast.custom(
+        <div className="flex items-center p-4 bg-yellow-400 text-black rounded-lg shadow-lg">
+          <svg
+            className="w-6 h-6 mr-2 text-black"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M12 18h0m-9 0a9 9 0 1118 0 9 9 0 01-18 0z"
+            ></path>
+          </svg>
+          <span className="font-medium">Please log in first!</span>
+        </div>,
+      );
+
+      navigate('/')
+    }
+  }, [navigate,localStorage]);
+
 
   const filteredJobs = jobsData.filter(job =>
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
     (selectedCategory === 'all' || job.category === selectedCategory)
   );
+
 
   useEffect(() => {
     getAllJobs();
@@ -45,6 +74,7 @@ const AllJobs = () => {
       </div>
     );
   }
+
 
   return (
     <div className="container mx-auto p-4">

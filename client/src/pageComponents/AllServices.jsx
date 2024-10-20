@@ -13,7 +13,7 @@ const services = [
   { name: 'Driver', rating: 4.4, image: '/api/placeholder/400/300' },
   { name: 'Gardener', rating: 4.5, image: '/api/placeholder/400/300' },
   { name: 'Electrician', rating: 4.6, image: '/api/placeholder/400/300' },
-  { name: 'Car Washer', rating: 4.2, image: '/api/placeholder/400/300' },
+  { name: 'Carwasher', rating: 4.2, image: '/api/placeholder/400/300' },
 ];
 
 const ServiceCard = ({ name, rating, image }) => (

@@ -14,7 +14,8 @@ const CustomerLogin = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
-  const {login} = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
 
   const handleSendOTP = () => {
     // Implement OTP sending logic here
@@ -23,75 +24,60 @@ const CustomerLogin = () => {
   };
 
   const handleLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get('http://localhost:8000/api/login/user', {
-        params: {
-          phone_number: phoneNumber
-        }
+        params: { phone_number: phoneNumber }
       });
-
       if (response.status === 200) {
-        login(response.data.email,false,response.data.id);
+        login(response.data.email, false, response.data.id);
         toast.success('Login successful!');
       }
     } catch (error) {
       toast.error('Login failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center">
-      <Toaster position="top-center" reverseOrder={false} />
-      <Card className="w-96">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">Sevamitra</CardTitle>
-          <CardDescription className="text-center">Login to find service providers</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="phone">Phone Number</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="phone"
-                  placeholder="Enter your phone number"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-                <Button onClick={handleSendOTP} disabled={otpSent}>
-                  {otpSent ? 'OTP Sent' : 'Send OTP'}
-                </Button>
-              </div>
-            </div>
-            {otpSent && (
-              <div className="space-y-2">
-                <Label htmlFor="otp">Enter OTP</Label>
-                <Input
-                  id="otp"
-                  placeholder="Enter 6-digit OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  maxLength={6}
-                />
-                <Button className="w-full mt-4" onClick={handleLogin} disabled={otp.length !== 6}>
-                  Login
-                </Button>
-              </div>
-            )}
+    <Card className="w-[350px]">
+      <CardHeader>
+        <CardTitle>Sevamitra Login</CardTitle>
+        <CardDescription>Login to find service providers</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid w-full items-center gap-4">
+          <div className="flex flex-col space-y-1.5">
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input id="phoneNumber" placeholder="Enter your phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           </div>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <Dialog open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
-            <DialogTrigger asChild>
-              <Button variant="link">Sign Up</Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <CustomerSignUp />
-            </DialogContent>
-          </Dialog>
-        </CardFooter>
-      </Card>
-    </div>
+          {!otpSent && (
+            <Button onClick={handleSendOTP}>Send OTP</Button>
+          )}
+          {otpSent && (
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="otp">Enter OTP</Label>
+              <Input id="otp" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} maxLength={6} />
+              <Button onClick={handleLogin} disabled={isLoading}>
+                {isLoading ? 'Logging in...' : 'Login'}
+              </Button>
+            </div>
+          )}
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Dialog open={isSignUpOpen} onOpenChange={setIsSignUpOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline">Sign Up</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <CustomerSignUp />
+          </DialogContent>
+        </Dialog>
+      </CardFooter>
+      <Toaster />
+    </Card>
   );
 };
 
